@@ -1,0 +1,16 @@
+{% extends 'staff_app/base.html' %}
+
+{% block content %}
+<h2>Create Appointment Request</h2>
+
+<form method="POST">
+    {% csrf_token %}
+    <label>Client ID:</label>
+    <input type="number" name="client_id" required>
+
+    <label>Reason:</label>
+    <textarea name="reason" rows="4" required></textarea>
+
+    <button type="submit">Create Request</button>
+</form>
+{% endblock %}

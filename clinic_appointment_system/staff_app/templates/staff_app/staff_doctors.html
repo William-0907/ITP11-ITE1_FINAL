@@ -1,0 +1,37 @@
+{% extends 'staff_app/base.html' %}
+
+{% block content %}
+<div class="container">
+    <h2>Doctors Management</h2>
+
+    <a href="{% url 'add_doctor' %}" class="btn" style="margin-bottom:15px;">Add New Doctor</a>
+
+    {% if doctors %}
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Doctor Name</th>
+                <th>Specialization</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for doc in doctors %}
+            <tr>
+                <td>{{ doc.id }}</td>
+                <td>{{ doc.name }}</td>
+                <td>{{ doc.specialization }}</td>
+                <td>
+                    <a href="{% url 'edit_doctor' doc.id %}" class="btn">Edit</a>
+                    <a href="{% url 'delete_doctor' doc.id %}" class="btn btn-reject">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p>No doctors added yet.</p>
+    {% endif %}
+</div>
+{% endblock %}

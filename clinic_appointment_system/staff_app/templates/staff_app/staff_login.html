@@ -1,0 +1,32 @@
+{% extends 'staff_app/auth_base.html' %}
+
+{% block form %}
+
+  <form method="POST">
+    <h1>Clinic Appointment Portal</h1>
+    {% csrf_token %}
+    <h2>Staff Login</h2>
+    
+    {% if messages %}
+      <ul>
+        {% for message in messages %}
+            {% if message %}
+                <li>{{ message }}</li>
+            {% endif %}
+        {% endfor %}
+      </ul>
+    {% endif %}
+    
+    {{ form.as_p }}
+    
+    <button class="btn">Login</button>
+    <!--<p class="toggle-text">
+      Don’t have an account?
+      <a href="{% url 'staff_register' %}">Register</a>
+    </p>-->
+    <p class="toggle-text">
+      Login as Client.
+      <a href="{% url 'client_login_php' %}">Go to Client Login</a>
+    </p>
+  </form>
+{% endblock form %}

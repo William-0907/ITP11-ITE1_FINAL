@@ -1,0 +1,94 @@
+{% extends 'staff_app/base.html' %}
+
+{% block content %}
+<div class="container">
+
+    <h2>Pending Appointment Requests</h2>
+
+    {% if pending_appointments %}
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Client Name</th>
+                <th>Doctor</th>
+                <th>Reason</th>
+                <th>Date</th>
+                <th>Time</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for appt in pending_appointments %}
+            <tr>
+                <td>{{ appt.id }}</td>
+                <td>{{ appt.client.username }}</td>
+                <td>{{ appt.doctor.name }}</td>
+                <td>{{ appt.reason }}</td>
+                <td>{{ appt.appointment_date|default:"-" }}</td>
+                <td>{{ appt.appointment_time|default:"-" }}</td>
+
+                <td>
+                    <span class="status-{{ appt.status|lower }}">
+                        {{ appt.status }}
+                    </span>
+                </td>
+
+                <td>
+                    <a href="{% url 'approve_appointment' appt.id %}" class="btn">Approve</a>
+                    <a href="{% url 'reject_appointment' appt.id %}" class="btn btn-reject">Reject</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    {% else %}
+        <p>No pending appointments at the moment.</p>
+    {% endif %}
+
+    <br><br>
+    
+    <h2>All Appointments</h2>
+
+    {% if all_appointments %}
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Client Name</th>
+                <th>Doctor</th>
+                <th>Reason</th>
+                <th>Date</th>
+                <th>Time</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for appt in all_appointments %}
+            <tr>
+                <td>{{ appt.id }}</td>
+                <td>{{ appt.client.username }}</td>
+                <td>{{ appt.doctor.name }}</td>
+                <td>{{ appt.reason }}</td>
+                <td>{{ appt.appointment_date|default:"-" }}</td>
+                <td>{{ appt.appointment_time|default:"-" }}</td>
+                <td>
+                    <span class="status-{{ appt.status|lower }}">
+                        {{ appt.status }}
+                    </span>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    {% else %}
+        <p>No appointments recorded yet.</p>
+    {% endif %}
+
+</div>
+{% endblock %}

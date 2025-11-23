@@ -1,0 +1,38 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="{% static 'staff_app/style.css' %}">
+
+<title>Staff Portal</title>
+
+</head>
+<body>
+
+<header>
+    <h1>Staff Portal</h1>
+    <nav>
+        <a href="{% url 'staff_dashboard' %}">Dashboard</a>
+        <a href="{% url 'staff_doctors' %}">Doctors</a>
+        <a href="{% url 'logout' %}">Logout</a>
+    </nav>
+</header>
+
+<main>
+    {% if messages %}
+        {% for message in messages %}
+            <div class="message {{ message.tags }}">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
+
+    {% block content %}{% endblock %}
+</main>
+
+<footer>
+    Staff Portal © 2025
+</footer>
+
+</body>
+</html>
