@@ -8,13 +8,9 @@
     <h2>Staff Login</h2>
     
     {% if messages %}
-      <ul>
         {% for message in messages %}
-            {% if message %}
-                <li>{{ message }}</li>
-            {% endif %}
+            <div class="message {{ message.tags }}">{{ message }}</div>
         {% endfor %}
-      </ul>
     {% endif %}
     
     {{ form.as_p }}
