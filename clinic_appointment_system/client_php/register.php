@@ -7,6 +7,7 @@ mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 $message = "";
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
     $username = $_POST['username'];
     $password = $_POST['password'];
     $confirm_password = $_POST['confirm_password'];
@@ -14,17 +15,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($password !== $confirm_password) {
         $message = "Passwords do not match.";
     } else {
-        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
-        $stmt = $conn->prepare("INSERT INTO clients (username, password) VALUES (?, ?)");
-        $stmt->bind_param("ss", $username, $hashed_password);
+        // hash password
+        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+        $created_at = date('Y-m-d H:i:s'); // REQUIRED for your table
+
+        // insert with created_at
+        $stmt = $conn->prepare("
+            INSERT INTO clients (username, password, created_at)
+            VALUES (?, ?, ?)
+        ");
+        $stmt->bind_param("sss", $username, $hashed_password, $created_at);
 
         try {
             if ($stmt->execute()) {
-                header("Location: index.php");
+                header("Location: index.php"); // redirect to login
                 exit();
             }
         } catch (mysqli_sql_exception $e) {
+
+            // duplicate username
             if ($e->getCode() == 1062) {
                 $message = "Username already exists. Please choose another.";
             } else {
@@ -36,8 +46,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 ?>
-
-
 
 <!DOCTYPE html>
 <html lang="en">

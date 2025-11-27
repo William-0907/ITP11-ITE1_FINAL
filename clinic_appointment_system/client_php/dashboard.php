@@ -10,10 +10,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $doctor_id = $_POST['doctor_id'];
     $reason = $_POST['reason'];
 
-    $stmt = $conn->prepare("INSERT INTO appointments (client_id, doctor_id, reason, status) VALUES (?, ?, ?, 'Pending')");
+    // Add created_at using NOW()
+    $stmt = $conn->prepare("INSERT INTO appointments (client_id, doctor_id, reason, status, created_at) VALUES (?, ?, ?, 'Pending', NOW())");
     $stmt->bind_param("iis", $_SESSION['client_id'], $doctor_id, $reason);
     $stmt->execute();
     $stmt->close();
+
     $message = "Appointment request submitted!";
 }
 
