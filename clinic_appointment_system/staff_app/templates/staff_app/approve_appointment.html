@@ -1,20 +1,31 @@
 {% extends 'staff_app/base.html' %}
 
 {% block content %}
-<h2>Approve Appointment #{{ appointment.id }}</h2>
+<div class="container">
+    <h2>Approve Appointment #{{ appointment.id }}</h2>
 
-<p><strong>Client ID:</strong> {{ appointment.client.username }}</p>
-<p><strong>Doctor ID:</strong> {{ appointment.doctor_id }}</p>
-<p><strong>Reason:</strong> {{ appointment.reason }}</p>
+    {% if messages %}
+        {% for message in messages %}
+            <div class="message {{ message.tags }}">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
 
-<form method="POST">
-    {% csrf_token %}
-    <label>Date:</label>
-    <input type="date" name="appointment_date" required>
+    <div style="margin-bottom:20px;">
+        <p><strong>Client:</strong> {{ appointment.client.username }}</p>
+        <p><strong>Doctor:</strong> {{ appointment.doctor.name }}</p>
+        <p><strong>Reason:</strong> {{ appointment.reason }}</p>
+    </div>
 
-    <label>Time:</label>
-    <input type="time" name="appointment_time" required>
+    <form method="POST">
+        {% csrf_token %}
 
-    <button type="submit">Approve</button>
-</form>
+        <label for="appointment_date">Date:</label>
+        <input type="date" id="appointment_date" name="appointment_date" required>
+
+        <label for="appointment_time">Time:</label>
+        <input type="time" id="appointment_time" name="appointment_time" required>
+
+        <button class="btn" type="submit">Approve</button>
+    </form>
+</div>
 {% endblock %}
