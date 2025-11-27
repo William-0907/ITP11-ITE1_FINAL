@@ -126,4 +126,4 @@ def delete_doctor(request, id):
     return redirect('staff_doctors')
     
 def client_login_php(request):
-    return redirect('http://127.0.0.1:8001/index.php')
+    return redirect('http://127.0.0.1:8000/index.php')

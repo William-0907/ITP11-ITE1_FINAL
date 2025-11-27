@@ -81,7 +81,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <p class="toggle-text">
     Login as Staff
-    <a href="staff_login.php">Go to Staff Login</a>
+    <a href="http://127.0.0.1:8001/staff/login/">Go to Staff Login</a>
 </p>
 
 </div>
