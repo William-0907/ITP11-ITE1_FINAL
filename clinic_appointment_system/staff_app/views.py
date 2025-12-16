@@ -68,7 +68,7 @@ def reject_appointment(request, id):
     appointment.status = 'Rejected'
     appointment.save()
     messages.success(request, "Appointment rejected successfully!")
-    return redirect('view_appointments')
+    return redirect('dashboard')
 
 
 @login_required(login_url='staff_login')
